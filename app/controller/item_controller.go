@@ -33,13 +33,26 @@ func (c *itemController) GetItems(ctx echo.Context) error {
 }
 
 func (c *itemController) PostItem(ctx echo.Context) error {
+	type form struct {
+		title         string `param:"title"`
+		isbn          string `param:"isbn"`
+		publisherName string `param:"publisher_name"`
+		salesDate     string `param:"sales_date"`
+		contentType   int    `param:"content_type"`
+	}
+
+	f := form{}
+	if err := ctx.Bind(&f); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
 	item := domain.Item{
 		//CreatedAt:     time.Now(),
-		Title:         "title",
-		Isbn:          "isbn",
-		PublisherName: "p",
-		SalesDate:     "s",
-		ContentType:   1,
+		Title:         f.title,
+		Isbn:          f.isbn,
+		PublisherName: f.publisherName,
+		SalesDate:     f.salesDate,
+		ContentType:   f.contentType,
 	}
 
 	if err := c.itemUsecase.PostItem(item); err != nil {
