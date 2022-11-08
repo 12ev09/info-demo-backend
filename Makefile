@@ -15,3 +15,6 @@ migrate_status:
 
 migrate_create:
 	docker-compose exec app bash -c "sql-migrate new create_items"
+
+logs:
+	docker-compose logs app
