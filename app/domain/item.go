@@ -4,7 +4,7 @@ import "time"
 
 type Item struct {
 	ID            uint      `db:"id" json:"id"`
-	CreatedAt     time.Time `db:"created_at json:"created_at"`
+	CreatedAt     time.Time `db:"created_at" json:"created_at"`
 	UpdatedAt     time.Time `db:"updated_at" json:"updated_at"`
 	Title         string    `db:"title" json:"title"`
 	Isbn          string    `db:"isbn" json:"isbn"`

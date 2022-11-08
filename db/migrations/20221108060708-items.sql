@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS items (
     publisher_name VARCHAR(255),
     sales_date VARCHAR(255),
     content_type int,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP NOT NULL DEFAULT,
+    updated_at TIMESTAMP NOT NULL DEFAULT,
     PRIMARY KEY (id)
 );
  

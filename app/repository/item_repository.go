@@ -22,6 +22,11 @@ func (i *itemRepository) GetItems() ([]domain.Item, error) {
 	return nil, nil
 }
 
-func (i *itemRepository) PostItem(domain.Item) error {
+func (i *itemRepository) PostItem(item domain.Item) error {
+	query := "INSERT INTO items (created_at, title, isbn, publisher_name,sales_date,content_type) VALUES (:created_at, :title, :isbn, :publisher_name, :sales_date, :content_type)"
+	if _, err := i.db.NamedExec(query, item); err != nil {
+		return err
+	}
+
 	return nil
 }

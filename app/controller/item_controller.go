@@ -1,7 +1,10 @@
 package controller
 
 import (
+	"fmt"
+	"log"
 	"net/http"
+	"time"
 
 	"github.com/12ev09/info-demo-backend/app/domain"
 	"github.com/12ev09/info-demo-backend/app/usecase"
@@ -29,6 +32,8 @@ func (c *itemController) GetItems(ctx echo.Context) error {
 			Title: "eee",
 		},
 	}
+
+	fmt.Print("hi")
 	// items, err := c.itemUsecase.GetItems()
 	// if err != nil {
 	// 	return nil
@@ -38,5 +43,19 @@ func (c *itemController) GetItems(ctx echo.Context) error {
 }
 
 func (c *itemController) PostItem(ctx echo.Context) error {
-	return nil
+	item := domain.Item{
+		CreatedAt:     time.Now(),
+		Title:         "title",
+		Isbn:          "isbn",
+		PublisherName: "p",
+		SalesDate:     "s",
+		ContentType:   1,
+	}
+
+	log.Print("hi")
+
+	if err := c.itemUsecase.PostItem(item); err != nil {
+		return err
+	}
+	return ctx.String(http.StatusOK, "post accepted")
 }
