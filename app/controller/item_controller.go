@@ -24,19 +24,39 @@ func NewItemController(itemUsecase usecase.ItemUsecase) ItemController {
 }
 
 func (c *itemController) GetItems(ctx echo.Context) error {
-	items := []domain.Item{
-		{
-			Title: "eee",
-		},
+	items, err := c.itemUsecase.GetItems()
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
-	// items, err := c.itemUsecase.GetItems()
-	// if err != nil {
-	// 	return nil
-	// }
 
 	return ctx.JSON(http.StatusOK, items)
 }
 
 func (c *itemController) PostItem(ctx echo.Context) error {
-	return nil
+	type form struct {
+		title         string `param:"title"`
+		isbn          string `param:"isbn"`
+		publisherName string `param:"publisher_name"`
+		salesDate     string `param:"sales_date"`
+		contentType   int    `param:"content_type"`
+	}
+
+	f := form{}
+	if err := ctx.Bind(&f); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
+	item := domain.Item{
+		//CreatedAt:     time.Now(),
+		Title:         f.title,
+		Isbn:          f.isbn,
+		PublisherName: f.publisherName,
+		SalesDate:     f.salesDate,
+		ContentType:   f.contentType,
+	}
+
+	if err := c.itemUsecase.PostItem(item); err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+	}
+	return ctx.String(http.StatusOK, "post accepted")
 }

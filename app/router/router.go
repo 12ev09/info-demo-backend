@@ -23,9 +23,9 @@ func Init() {
 
 	// ルートを設定
 	e.GET("/items", itemController.GetItems)
-	//e.POST("/items")
+	e.POST("/items", itemController.PostItem)
 
 	if err := e.Start(":8080"); err != nil {
-		e.Logger.Fatal()
+		e.Logger.Fatal(err)
 	}
 }
