@@ -26,6 +26,6 @@ func Init() {
 	//e.POST("/items")
 
 	if err := e.Start(":8080"); err != nil {
-		e.Logger.Fatal(e.Start(":8080"))
+		e.Logger.Fatal()
 	}
 }
