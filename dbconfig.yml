@@ -1,0 +1,5 @@
+development:
+  dialect: mysql
+  datasource: root:password@tcp(go_db:3306)/api_db?charset=utf8mb4&collation=utf8mb4_general_ci&parseTime=true
+  dir: db/migrations
+  table: migrations

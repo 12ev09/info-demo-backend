@@ -1,0 +1,25 @@
+version: '3'
+services:
+  app:
+    build: 
+      context: .
+    container_name: go_container
+    tty: true
+    volumes:
+      - ./:/app
+    working_dir: /app
+    ports:
+      - "8080:8080"
+  db:
+    image: mysql:8.0
+    container_name: go_db
+    volumes:
+        - ./db/mysql_data:/var/lib/mysql
+        - ./db/initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
