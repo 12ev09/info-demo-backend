@@ -8,5 +8,5 @@ type Item struct {
 	Isbn          string `db:"isbn" json:"isbn"`
 	PublisherName string `db:"publisher_name" json:"publisher_name"`
 	SalesDate     string `db:"sales_date" json:"sales_date"`
-	ContentType   int    `db:"content_type" json:"content_type"`
+	ContentType   string `db:"content_type" json:"content_type"`
 }
