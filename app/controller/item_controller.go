@@ -34,11 +34,11 @@ func (c *itemController) GetItems(ctx echo.Context) error {
 
 func (c *itemController) PostItem(ctx echo.Context) error {
 	type form struct {
-		title         string `param:"title"`
-		isbn          string `param:"isbn"`
-		publisherName string `param:"publisher_name"`
-		salesDate     string `param:"sales_date"`
-		contentType   int    `param:"content_type"`
+		title         string `json:"title"`
+		isbn          string `json:"isbn"`
+		publisherName string `json:"publisher_name"`
+		salesDate     string `json:"sales_date"`
+		contentType   int    `json:"content_type"`
 	}
 
 	f := form{}
