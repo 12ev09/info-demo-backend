@@ -34,11 +34,11 @@ func (c *itemController) GetItems(ctx echo.Context) error {
 
 func (c *itemController) PostItem(ctx echo.Context) error {
 	type form struct {
-		title         string `json:"title"`
-		isbn          string `json:"isbn"`
-		publisherName string `json:"publisher_name"`
-		salesDate     string `json:"sales_date"`
-		contentType   int    `json:"content_type"`
+		Title         string `json:"title"`
+		Isbn          string `json:"isbn"`
+		PublisherName string `json:"publisher_name"`
+		SalesDate     string `json:"sales_date"`
+		ContentType   int    `json:"content_type"`
 	}
 
 	f := form{}
@@ -47,12 +47,11 @@ func (c *itemController) PostItem(ctx echo.Context) error {
 	}
 
 	item := domain.Item{
-		//CreatedAt:     time.Now(),
-		Title:         f.title,
-		Isbn:          f.isbn,
-		PublisherName: f.publisherName,
-		SalesDate:     f.salesDate,
-		ContentType:   f.contentType,
+		Title:         f.Title,
+		Isbn:          f.Isbn,
+		PublisherName: f.PublisherName,
+		SalesDate:     f.SalesDate,
+		ContentType:   f.ContentType,
 	}
 
 	if err := c.itemUsecase.PostItem(item); err != nil {
