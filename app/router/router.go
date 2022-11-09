@@ -14,6 +14,7 @@ func Init() {
 	// ミドルウェアを設定
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+	e.Use(middleware.CORS())
 
 	itemRepostiory := repository.NewItemRepository(db.DB)
 
