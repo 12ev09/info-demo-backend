@@ -6,4 +6,3 @@ make build
 make up
 make migrate_up
 ```
-
