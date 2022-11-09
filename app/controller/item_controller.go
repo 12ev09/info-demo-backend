@@ -38,7 +38,7 @@ func (c *itemController) PostItem(ctx echo.Context) error {
 		Isbn          string `json:"isbn"`
 		PublisherName string `json:"publisher_name"`
 		SalesDate     string `json:"sales_date"`
-		ContentType   int    `json:"content_type"`
+		ContentType   int    `json:"type"`
 	}
 
 	f := form{}
