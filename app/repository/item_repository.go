@@ -11,6 +11,8 @@ import (
 type ItemRepository interface {
 	GetItems(contentType int) ([]domain.Item, error)
 	PostItem(domain.Item) error
+	DeleteItem(id int) error
+	UpdateItem(domain.Item) error
 }
 
 type itemRepository struct {
@@ -49,6 +51,24 @@ func (i *itemRepository) GetItems(contentType int) ([]domain.Item, error) {
 func (i *itemRepository) PostItem(item domain.Item) error {
 	query := "INSERT INTO items (title, isbn, publisher_name,sales_date,content_type) VALUES (:title, :isbn, :publisher_name, :sales_date, :content_type)"
 	if _, err := i.db.NamedExec(query, item); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (i *itemRepository) UpdateItem(item domain.Item) error {
+	query := "UPDATE items SET title = :title, isbn = :isbn, publisher_name = :publisher_name,sales_date = :sales_date, content_type = :content_type where id = :id"
+	if _, err := i.db.NamedExec(query, item); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (i *itemRepository) DeleteItem(id int) error {
+	query := "DELETE from items where id = :id"
+	if _, err := i.db.NamedExec(query, map[string]interface{}{"id": id}); err != nil {
 		return err
 	}
 

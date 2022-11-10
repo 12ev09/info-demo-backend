@@ -30,3 +30,26 @@ func (i *itemInteractor) PostItem(item domain.Item) error {
 	}
 	return nil
 }
+
+func (i *itemInteractor) DeleteItem(id int) error {
+	if err := i.itemRepository.DeleteItem(id); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (i *itemInteractor) UpdateItem(input UpdateItemInput) error {
+	item := domain.Item{
+		ID:            input.ID,
+		Title:         input.Title,
+		Isbn:          input.Isbn,
+		PublisherName: input.PublisherName,
+		SalesDate:     input.SalesDate,
+		ContentType:   input.ContentType,
+	}
+
+	if err := i.itemRepository.UpdateItem(item); err != nil {
+		return err
+	}
+	return nil
+}
