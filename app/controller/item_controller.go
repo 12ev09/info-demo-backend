@@ -50,6 +50,7 @@ func (c *itemController) GetItems(ctx echo.Context) error {
 
 func (c *itemController) PostItem(ctx echo.Context) error {
 	type form struct {
+		Author        string `json:"author"`
 		Title         string `json:"title"`
 		Isbn          string `json:"isbn"`
 		PublisherName string `json:"publisher_name"`
@@ -63,6 +64,7 @@ func (c *itemController) PostItem(ctx echo.Context) error {
 	}
 
 	item := domain.Item{
+		Author:        f.Author,
 		Title:         f.Title,
 		Isbn:          f.Isbn,
 		PublisherName: f.PublisherName,
@@ -90,6 +92,7 @@ func (c *itemController) DeleteItem(ctx echo.Context) error {
 
 func (c *itemController) UpdateItem(ctx echo.Context) error {
 	type form struct {
+		Author        string `json:"author"`
 		Title         string `json:"title"`
 		Isbn          string `json:"isbn"`
 		PublisherName string `json:"publisher_name"`

@@ -26,6 +26,7 @@ func (i *itemInteractor) GetItems(contentType int) ([]OutputItem, error) {
 	for _, item := range items {
 		output = append(output, OutputItem{
 			ID:            item.ID,
+			Author:        item.Author,
 			Title:         item.Title,
 			Isbn:          item.Isbn,
 			PublisherName: item.PublisherName,

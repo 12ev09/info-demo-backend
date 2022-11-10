@@ -11,6 +11,7 @@ type ItemUsecase interface {
 
 type OutputItem struct {
 	ID            uint   `json:"id"`
+	Author        string `json:"author"`
 	Title         string `json:"title"`
 	Isbn          string `json:"isbn"`
 	PublisherName string `json:"publisher_name"`
@@ -20,6 +21,7 @@ type OutputItem struct {
 
 type UpdateItemInput struct {
 	ID            uint
+	Author        string
 	Title         string
 	Isbn          string
 	PublisherName string

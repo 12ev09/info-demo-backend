@@ -29,10 +29,26 @@ func (i *itemRepository) GetItems(contentType int) ([]domain.Item, error) {
 	args := []string{}
 
 	if contentType != 0 {
-		args = append(args, fmt.Sprintf("where content_type=%d", contentType))
+		args = append(args, fmt.Sprintf("content_type=%d", contentType))
 	}
 
-	rows, err := i.db.Queryx(fmt.Sprintf("SELECT * from items %s", strings.Join(args, " ")))
+	if len(args) > 0 {
+		rows, err := i.db.Queryx(fmt.Sprintf("SELECT * from items where %s", strings.Join(args, " and ")))
+		if err != nil {
+			return nil, err
+		}
+
+		for rows.Next() {
+			item := domain.Item{}
+			if err := rows.StructScan(&item); err != nil {
+				return nil, err
+			}
+			items = append(items, item)
+		}
+		return items, nil
+	}
+
+	rows, err := i.db.Queryx("SELECT * from items")
 	if err != nil {
 		return nil, err
 	}
@@ -44,12 +60,11 @@ func (i *itemRepository) GetItems(contentType int) ([]domain.Item, error) {
 		}
 		items = append(items, item)
 	}
-
 	return items, nil
 }
 
 func (i *itemRepository) PostItem(item domain.Item) error {
-	query := "INSERT INTO items (title, isbn, publisher_name,sales_date,content_type) VALUES (:title, :isbn, :publisher_name, :sales_date, :content_type)"
+	query := "INSERT INTO items (author, title, isbn, publisher_name,sales_date,content_type) VALUES (:author, :title, :isbn, :publisher_name, :sales_date, :content_type)"
 	if _, err := i.db.NamedExec(query, item); err != nil {
 		return err
 	}
@@ -58,7 +73,7 @@ func (i *itemRepository) PostItem(item domain.Item) error {
 }
 
 func (i *itemRepository) UpdateItem(item domain.Item) error {
-	query := "UPDATE items SET title = :title, isbn = :isbn, publisher_name = :publisher_name,sales_date = :sales_date, content_type = :content_type where id = :id"
+	query := "UPDATE items SET author = :author, title = :title, isbn = :isbn, publisher_name = :publisher_name,sales_date = :sales_date, content_type = :content_type where id = :id"
 	if _, err := i.db.NamedExec(query, item); err != nil {
 		return err
 	}
