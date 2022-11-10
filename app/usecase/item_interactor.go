@@ -15,8 +15,8 @@ func NewItemInteractor(itemRepository repository.ItemRepository) ItemUsecase {
 	}
 }
 
-func (i *itemInteractor) GetItems() ([]domain.Item, error) {
-	items, err := i.itemRepository.GetItems()
+func (i *itemInteractor) GetItems(contentType int) ([]domain.Item, error) {
+	items, err := i.itemRepository.GetItems(contentType)
 	if err != nil {
 		return nil, err
 	}

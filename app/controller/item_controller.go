@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/12ev09/info-demo-backend/app/domain"
@@ -24,7 +25,18 @@ func NewItemController(itemUsecase usecase.ItemUsecase) ItemController {
 }
 
 func (c *itemController) GetItems(ctx echo.Context) error {
-	items, err := c.itemUsecase.GetItems()
+	type params struct {
+		ContentType int `query:"type"`
+	}
+
+	p := params{}
+	if err := ctx.Bind(&p); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
+	log.Print(p.ContentType)
+
+	items, err := c.itemUsecase.GetItems(p.ContentType)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
