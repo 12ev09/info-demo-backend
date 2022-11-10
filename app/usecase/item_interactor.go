@@ -15,13 +15,26 @@ func NewItemInteractor(itemRepository repository.ItemRepository) ItemUsecase {
 	}
 }
 
-func (i *itemInteractor) GetItems(contentType int) ([]domain.Item, error) {
+func (i *itemInteractor) GetItems(contentType int) ([]OutputItem, error) {
 	items, err := i.itemRepository.GetItems(contentType)
 	if err != nil {
 		return nil, err
 	}
 
-	return items, nil
+	output := []OutputItem{}
+
+	for _, item := range items {
+		output = append(output, OutputItem{
+			ID:            item.ID,
+			Title:         item.Title,
+			Isbn:          item.Isbn,
+			PublisherName: item.PublisherName,
+			SalesDate:     item.SalesDate,
+			ContentType:   domain.ContentTypeString(item.ContentType),
+		})
+	}
+
+	return output, nil
 }
 
 func (i *itemInteractor) PostItem(item domain.Item) error {

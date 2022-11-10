@@ -8,5 +8,34 @@ type Item struct {
 	Isbn          string `db:"isbn" json:"isbn"`
 	PublisherName string `db:"publisher_name" json:"publisher_name"`
 	SalesDate     string `db:"sales_date" json:"sales_date"`
-	ContentType   string `db:"content_type" json:"content_type"`
+	ContentType   int    `db:"content_type" json:"content_type"`
+}
+
+// カテゴリ
+type ContentType int
+
+const (
+	unknown             ContentType = iota
+	ContentTypeBook                 // 本
+	ContentTypeCD                   // CD/DVD/BD
+	ContentTypeSoftware             // ソフトウェア
+	ContentTypeGame                 // ゲーム
+	ContentTypeOthers               // その他
+)
+
+func ContentTypeString(ct int) string {
+	switch ContentType(ct) {
+	case ContentTypeBook:
+		return "本"
+	case ContentTypeCD:
+		return "CD/DVD/BD"
+	case ContentTypeSoftware:
+		return "ソフトウェア"
+	case ContentTypeGame:
+		return "ゲーム"
+	case ContentTypeOthers:
+		return "その他"
+	default:
+		return "unknown"
+	}
 }
