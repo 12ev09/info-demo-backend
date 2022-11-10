@@ -4,6 +4,9 @@ build:
 up:
 	docker-compose up -d
 
+enter:
+	docker-compose exec db bash
+
 migrate_up:
 	docker-compose exec app bash -c "sql-migrate up"
 
